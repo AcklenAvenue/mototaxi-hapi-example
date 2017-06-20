@@ -1,0 +1,7 @@
+{
+    "commandQueueUrl": "<url to your sqs command queue>",
+    "eventQueueUrl": "<url to your sqs event queue>",
+    "region": "<region>",
+    "pollingInterval": 2000,
+    "maxNumberOfMessages": 5
+}

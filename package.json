@@ -4,8 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "debug": "node --inspect --nolazy --debug-brk=5858 index.js"
+    "start": "node index"
   },
   "repository": {
     "type": "git",
@@ -19,9 +18,7 @@
   "homepage": "https://github.com/AcklenAvenue/mototaxi-hapi-example#readme",
   "dependencies": {
     "aws-sdk": "^2.73.0",
-    "colors": "^1.1.2",
     "hapi": "^16.4.3",
-    "mototaxi": "^1.1.58",
-    "uuid": "^3.1.0"
+    "mototaxi": "^1.1.58"
   }
 }
