@@ -36,33 +36,32 @@ const sendDomainEventToQueue = (transactionId, sqs, config, domainEvent) => {
 }
 
 const pollForMessages = (dispatcher, sqs, config) => {
-  const commandQueueParams = {
-    QueueUrl: config.commandQueueUrl,
-    MaxNumberOfMessages: 5,
-    WaitTimeSeconds: 5
-  };
-  sqs.receiveMessage(commandQueueParams, (err, data) => {
-      if(err){
-        console.log(err);
-        return;
-      }
+    const commandQueueParams = {
+        QueueUrl: config.commandQueueUrl,
+        MaxNumberOfMessages: 5,
+        WaitTimeSeconds: 5
+    };
+    sqs.receiveMessage(commandQueueParams, (err, data) => {
+        if(err){
+            console.log(err);
+            return;
+        }
 
-      (data.Messages || []).forEach((message) => {
-        const transaction  = JSON.parse(message.Body);
-        log(`Consumer: Received command ${transaction.type} from queue. Dispatching to handler.`);
-        dispatcher.dispatch(transaction.payload)
-            .subscribe((e) => {
-                log(`Consumer: Domain event ${e.type} returned from command handler.`);
-                removeFromCommandQueue(transaction.transactionId, sqs, config, message);
-                sendDomainEventToQueue(transaction.transactionId, sqs, config, e);
-            });
-      });
+        (data.Messages || []).forEach((message) => {
+            const transaction  = JSON.parse(message.Body);
+            log(`Consumer: Received command ${transaction.type} from queue. Dispatching to handler.`);
+            dispatcher.dispatch(transaction.payload)
+                .subscribe((e) => {
+                    log(`Consumer: Domain event ${e.type} returned from command handler.`);
+                    removeFromCommandQueue(transaction.transactionId, sqs, config, message);
+                    sendDomainEventToQueue(transaction.transactionId, sqs, config, e);
+                });
+        });
   });
 }
 
 module.exports.start = (config, commandHandlers) => {
     const sqs = new AWS.SQS({region: config.region});
-
     const dispatcher = mototaxi.getDispatcher({
         commandHandlers: commandHandlers
     });
@@ -71,5 +70,6 @@ module.exports.start = (config, commandHandlers) => {
     setInterval(() => {
         pollForMessages(dispatcher, sqs, config)
     }, pollInterval);
+
     pollForMessages(dispatcher, sqs, config);
 };
