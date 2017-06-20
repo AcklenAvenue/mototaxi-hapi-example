@@ -1,0 +1,27 @@
+{
+  "name": "mototaxi-hapi-example",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "debug": "node --inspect --nolazy --debug-brk=5858 index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AcklenAvenue/mototaxi-hapi-example.git"
+  },
+  "author": "Byron Sommardahl <byron@acklenavenue.com> (http://acklenavenue.com)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AcklenAvenue/mototaxi-hapi-example/issues"
+  },
+  "homepage": "https://github.com/AcklenAvenue/mototaxi-hapi-example#readme",
+  "dependencies": {
+    "aws-sdk": "^2.73.0",
+    "colors": "^1.1.2",
+    "hapi": "^16.4.3",
+    "mototaxi": "^1.1.58",
+    "uuid": "^3.1.0"
+  }
+}
